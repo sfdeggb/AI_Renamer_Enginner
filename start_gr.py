@@ -8,9 +8,9 @@ from datetime import datetime
 
 # 导入处理器模块
 try:
-    from image_processor import process_image
-    from text_processor import process_text
-    from video_processor import process_video
+    from src.image_processor import process_image
+    from src.text_processor import process_text
+    from src.video_processor import process_video
 except ImportError as e:
     print(f"警告: 某些处理器模块未找到: {e}")
 
