@@ -3,8 +3,9 @@
 ## Intervew🤖🤖🤖
 Are there many files in your computer that you do not know what is because of the simple naming before, this tool combined with LLM can help you automatically name according to the content of your files, you no longer need to worry about the improper naming of files.</br>
 
-![rename_floader](/demo/rename.jpg)
-![config](/demo/config.jpg)
+![rename_floader](/demo/rename.png)
+![config](/demo/config.png)
+![config](/demo/help.png)
 
 ## 🚀Featuers
 * Supports local ollama server model calls and online openai model calls
