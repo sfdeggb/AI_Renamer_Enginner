@@ -1,0 +1,6 @@
+{
+  "Base_url": "https://ms-ens-dbcc6191-9fb0.api-inference.modelscope.cn/v1",
+  "Model": "qwen",
+  "Perplexity": 0.8,
+  "Access_token": "ms-bfa018d4-ad57-4de5-a14e-0b17fc83b07a"
+}

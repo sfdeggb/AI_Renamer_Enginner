@@ -18,11 +18,21 @@ except ImportError as e:
 stop_event = threading.Event()
 processing_status = {"is_processing": False, "current_file": "", "progress": 0}
 
-def process_files_concurrently(source_folder):
+def process_files_concurrently(folder_path):
     """并发处理文件的主要函数"""
     global stop_event, processing_status
     
-    if not source_folder or not os.path.exists(source_folder):
+    # 处理gr.File组件返回的文件对象
+    if folder_path is None or len(folder_path) == 0:
+        return "❌ 错误: 请选择有效的文件夹路径"
+    
+    # 获取文件夹路径
+    if isinstance(folder_path, list) and len(folder_path) > 0:
+        folder_path = folder_path[0].name if hasattr(folder_path[0], 'name') else str(folder_path[0])
+    else:
+        folder_path = str(folder_path)
+    
+    if not os.path.exists(folder_path):
         return "❌ 错误: 请选择有效的文件夹路径"
     
     messages = []
@@ -36,10 +46,10 @@ def process_files_concurrently(source_folder):
     stop_event.clear()
     processing_status["is_processing"] = True
     
-    messages.append(f"🚀 开始扫描文件夹: {source_folder}")
+    messages.append(f"🚀 开始扫描文件夹: {folder_path}")
     
     # 扫描文件
-    for root, dirs, files in os.walk(source_folder):
+    for root, dirs, files in os.walk(folder_path):
         dirs[:] = [d for d in dirs if d != '.airenametmp']
         for filename in files:
             if filename.lower().endswith(text_suffixes + video_suffixes + image_suffixes):
@@ -109,7 +119,7 @@ def save_config(base_url, model, perplexity, access_token=None):
             "Access_token": access_token or ""
         }
         
-        with open('config.json', 'w', encoding='utf-8') as f:
+        with open('config/config.json', 'w', encoding='utf-8') as f:
             json.dump(config, f, indent=2, ensure_ascii=False)
         
         return "✅ 配置保存成功!"
@@ -119,8 +129,8 @@ def save_config(base_url, model, perplexity, access_token=None):
 def load_config():
     """加载配置"""
     try:
-        if os.path.exists('config.json'):
-            with open('config.json', 'r', encoding='utf-8') as f:
+        if os.path.exists('config/config.json'):
+            with open('config/config.json', 'r', encoding='utf-8') as f:
                 config = json.load(f)
             return (
                 config.get("Base_url", ""),
@@ -330,9 +340,9 @@ def create_interface():
                 
                 with gr.Row():
                     with gr.Column(scale=3):
-                        folder_input = gr.Textbox(
+                        folder_input = gr.File(
                             label="📂 选择文件夹路径",
-                            placeholder="请输入要处理的文件夹路径...",
+                            file_count="directory",
                             elem_classes="input-box"
                         )
                     with gr.Column(scale=1):

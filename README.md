@@ -43,4 +43,7 @@ python start.py
 ## 🔧 Reference
 [video_summarize](https://github.com/StartHua/video_summarize/tree/main)
 
+## 未来工作
+1. 使用更加可靠的本地LLM API调用
+
 
